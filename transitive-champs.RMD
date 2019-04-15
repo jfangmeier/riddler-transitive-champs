@@ -107,12 +107,13 @@ wbb_t_champs <- bb_games %>%
 wbb_degree_sep <- wbb_t_champs %>% length
 
 for(x in 1:rounds){
-  wbb_t_champs <- bb_games %>% 
+  wbb_t_champ_beaters <- bb_games %>% 
     filter(sport == "WBB" & lose_team %in% wbb_t_champs) %>% 
     pull(win_team) %>% 
     unique()
+  wbb_t_champs <- c(wbb_t_champs, wbb_t_champ_beaters)
   wbb_t_champs <- wbb_t_champs[!wbb_t_champs == wbb_n_champ] #Remove the national champion from the transitive champs vector
-  wbb_degree_sep <- rbind(wbb_degree_sep, wbb_t_champs %>% length)
+  wbb_degree_sep <- rbind(wbb_degree_sep, wbb_t_champs %>% unique() %>% length)
 }
 
 wbb_transitive_champs <- wbb_degree_sep %>% 
@@ -135,12 +136,13 @@ mbb_t_champs <- bb_games %>%
 mbb_degree_sep <- mbb_t_champs %>% length
 
 for(x in 1:rounds){
-  mbb_t_champs <- bb_games %>% 
+  mbb_t_champ_beaters <- bb_games %>% 
     filter(sport == "MBB" & lose_team %in% mbb_t_champs) %>% 
     pull(win_team) %>% 
     unique()
+  mbb_t_champs <- c(mbb_t_champs, mbb_t_champ_beaters)
   mbb_t_champs <- mbb_t_champs[!mbb_t_champs == mbb_n_champ] #Remove the national champion from the transitive champs vector
-  mbb_degree_sep <- rbind(mbb_degree_sep, mbb_t_champs %>% length)
+  mbb_degree_sep <- rbind(mbb_degree_sep, mbb_t_champs %>% unique() %>% length)
 }
 
 mbb_transitive_champs <- mbb_degree_sep %>% 
